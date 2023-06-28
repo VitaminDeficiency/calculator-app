@@ -3,7 +3,7 @@ import { connect } from "../redux/store.js";
 
 function Key({ key }) {
   return html`
-    <td>
+    <td ${key.colspan}>
       <input
         type="button"
         value="${key.value === "*" ? "x" : key.value}"

@@ -2,7 +2,13 @@ import html from "../redux/core.js";
 import { connect } from "../redux/store.js";
 import Key from "./Key.js";
 
-function KeyRow({ keys_row_1, keys_row_2, keys_row_3, keys_row_4 }) {
+function KeyRow({
+  keys_row_1,
+  keys_row_2,
+  keys_row_3,
+  keys_row_4,
+  keys_row_5,
+}) {
   return html`
     <tr>
       ${keys_row_1.map((key) => Key({ key }))}
@@ -15,6 +21,9 @@ function KeyRow({ keys_row_1, keys_row_2, keys_row_3, keys_row_4 }) {
     </tr>
     <tr>
       ${keys_row_4.map((key) => Key({ key }))}
+    </tr>
+    <tr>
+      ${keys_row_5.map((key) => Key({ key }))}
     </tr>
   `;
 }
