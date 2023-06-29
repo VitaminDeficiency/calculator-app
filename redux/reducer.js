@@ -35,7 +35,7 @@ const init = {
   ],
   eds: "0",
   pickMath: "",
-  disable: "",
+  disable: "DEL",
 };
 
 const actions = {
@@ -46,7 +46,6 @@ const actions = {
   isMath: false,
   isSol: false,
   flag: false,
-  isImp: true,
 
   imp(_, value) {
     if (this.disValue === "0") {
@@ -83,7 +82,7 @@ const actions = {
     }
     if (check(value)) {
       let x = eval(value);
-      return x.toString();
+      return parseFloat(x.toPrecision(7)).toString();
     }
   },
 
@@ -92,11 +91,17 @@ const actions = {
       this.disValue = "0";
       this.flag = false;
     }
+
     if (this.isMath) {
       this.equals += this.addMath;
       this.isMath = false;
       init.pickMath = "";
     }
+
+    if (value == 0) {
+      this.delBtn(false);
+    } else this.delBtn();
+
     this.imp(_, value); // -> disValue
     this.display(this.disValue);
   },
@@ -108,18 +113,19 @@ const actions = {
     } else {
       this.equals = this.disValue;
     }
+
     this.disValue = this.equals;
     this.result = this.sol(this.equals);
     this.display(this.result);
     this.equals = this.result;
+    this.delBtn(false);
     this.flag = true;
   },
 
   equ(_, value) {
     this.addMath = value;
     init.pickMath = this.addMath;
-    init.disable = "DEL";
-    this.isImp = false;
+    this.delBtn(false);
     if (!this.isMath) {
       this.dis_sol();
       this.isMath = true;
@@ -134,20 +140,30 @@ const actions = {
   del() {
     if (this.isImp) {
       this.disValue = this.disValue.toString().slice(0, -1);
-      this.disValue === "" && this.clr();
+      if (this.disValue === "" || this.disValue === "0") this.clr();
       this.display(this.disValue);
     }
   },
+
+  delBtn(active = true) {
+    if (active) {
+      init.disable = "";
+      this.isImp = true;
+    } else {
+      init.disable = "DEL";
+      this.isImp = false;
+    }
+  },
+
   clr() {
     this.disValue = "0";
     this.equals = "";
     this.result = "";
     this.addMath = "";
-    init.disable = "";
     this.isMath = false;
     this.isSol = false;
     this.flag = false;
-    this.isImp = true;
+    this.delBtn(false);
     this.display();
   },
 };
