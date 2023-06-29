@@ -41,7 +41,6 @@ const init = {
 const actions = {
   disValue: "0",
   equals: "",
-  result: "",
   addMath: "",
   isMath: false,
   isSol: false,
@@ -115,9 +114,8 @@ const actions = {
     }
 
     this.disValue = this.equals;
-    this.result = this.sol(this.equals);
-    this.display(this.result);
-    this.equals = this.result;
+    this.equals = this.sol(this.equals);
+    this.display(this.equals);
     this.delBtn(false);
     this.flag = true;
   },
@@ -158,7 +156,6 @@ const actions = {
   clr() {
     this.disValue = "0";
     this.equals = "";
-    this.result = "";
     this.addMath = "";
     this.isMath = false;
     this.isSol = false;
